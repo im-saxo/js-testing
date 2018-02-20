@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    
+    <div id="mocha"></div>
+    
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.1.2/chai.min.js"></script>
+    
+    <script>
+      function isPrimitive(target) {
+	      return typeof target !== 'object' || target === null;
+      }
+      
+      function deepEqual(x, y) {
+      	if (!isPrimitive(x) && !isPrimitive(y)) {
+      		if (Object.keys(x).length !== Object.keys(y).length) {
+      			return false;
+          }
+      
+      		for (let prop in x) {
+      			if (y.hasOwnProperty(prop)) {
+      				if (!deepEqual(x[prop], y[prop])) {
+      					return false;
+      				}
+      			} else {
+      				return false;
+      			}
+      		}
+      
+      		return true;
+      	} else {
+      		return x === y;
+      	}
+      }
+    </script>
+    
+    <script>mocha.setup('bdd')</script>
+    <script src="test.js"></script>
+    <script>
+      mocha.run();
+    </script>
+  </body>
+
+</html>
